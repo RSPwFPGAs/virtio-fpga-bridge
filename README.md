@@ -1,2 +1,2 @@
-# virtio-fpga
-A platform for emulating Virtio devices with FPGAs
+# virtio-fpga-bridge
+A platform for emulatiing Virtio front-end and back-end bridge with FPGAs.
