@@ -1,0 +1,84 @@
+diff -Naur qemu-2.10.0-rc3.cosim-patched/hw/misc/accelerator_pcie.c qemu-2.10.0-rc3/hw/misc/accelerator_pcie.c
+--- qemu-2.10.0-rc3.cosim-patched/hw/misc/accelerator_pcie.c	2020-07-21 22:00:18.009673814 +0800
++++ qemu-2.10.0-rc3/hw/misc/accelerator_pcie.c	2020-07-21 22:03:16.920793433 +0800
+@@ -64,6 +64,7 @@
+ #define MMIO_WRITE_BAR(_num)                                                   \
+     static void mmio_write_bar##_num(void *opaque, hwaddr addr, uint64_t val,  \
+                                      unsigned size) {                          \
++        printf("accl: mmio_wr: @0x%016lx(%d) =0x%016lx\n", addr, size, val);   \
+         ACCPCIeState *s = opaque;                                              \
+         ACCData acc_req;                                                       \
+         /*memset(&acc_req, 0, sizeof(ACCData));*/                              \
+@@ -156,6 +157,7 @@
+ 		}																	   \
+ 		ACCELERATOR_DPRINTF("BAR[%d] RD %016lx:   %lx\n", _num, addr, data);   \
+         zframe_destroy(&frame);                                                \
++        printf("accl: mmio_rd: @0x%016lx(%d) =0x%016lx\n", addr, size, data);  \
+         return data;                                                           \
+     }
+ 
+@@ -197,7 +199,9 @@
+         case READ:
+             ACCELERATOR_DPRINTF("Host read request\n");
+             cpu_physical_memory_read(addr, acc_data->data, acc_data->data_size);
+-            // Send frame
++	    printf("accl:  dma_rd: @0x%016lx(%d) =0x", addr, acc_data->data_size);
++	    for (int d = acc_data->data_size; d > 0; d--) {printf("%02x", acc_data->data[d-1]);} printf("\n");
++	    // Send frame
+             int rv = zframe_send(&frame, s->hdl_resp, ZFRAME_REUSE);
+             if (rv != 0) {
+                 ACCELERATOR_EPRINTF("HDL REQ ERROR %s:%d\n", __func__,
+@@ -206,11 +210,13 @@
+             break;
+         case WRITE:
+             ACCELERATOR_DPRINTF("Host write request\n");
+-            cpu_physical_memory_write(addr, acc_data->data,
+-                                      acc_data->data_size);
++            printf("accl:  dma_wr: @0x%016lx(%d) =0x", addr, acc_data->data_size);
++	    for (int d = acc_data->data_size; d > 0; d--) {printf("%02x", acc_data->data[d-1]);} printf("\n");
++            cpu_physical_memory_write(addr, acc_data->data, acc_data->data_size);
+             break;
+         case INTR:
+             ACCELERATOR_DPRINTF("Host intr request\n");
++            printf("accl: intr_wr: vec =0x%08x\n", acc_data->vector);
+             if (msix_enabled(dev))
+                 msix_notify(dev, acc_data->vector);
+             else
+diff -Naur qemu-2.10.0-rc3.cosim-patched/hw/virtio/virtio-pci.c qemu-2.10.0-rc3/hw/virtio/virtio-pci.c
+--- qemu-2.10.0-rc3.cosim-patched/hw/virtio/virtio-pci.c	2020-07-21 22:00:18.013673684 +0800
++++ qemu-2.10.0-rc3/hw/virtio/virtio-pci.c	2020-07-21 22:03:10.304685328 +0800
+@@ -353,6 +353,8 @@
+     VirtIOPCIProxy *proxy = opaque;
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+     hwaddr pa;
++    
++    printf("virt:  pio_wr: @0x%08x =0x%08x\n", addr, val);
+ 
+     switch (addr) {
+     case VIRTIO_PCI_GUEST_FEATURES:
+@@ -466,6 +468,7 @@
+         break;
+     }
+ 
++    printf("virt:  pio_rd: @0x%08x =0x%08x\n", addr, ret);
+     return ret;
+ }
+ 
+@@ -1254,6 +1257,8 @@
+         val = 0;
+     }
+ 
++    printf("virt: mmio_rd: @0x%016lx =0x%08x\n", addr, val);
++
+     return val;
+ }
+ 
+@@ -1263,6 +1268,8 @@
+     VirtIOPCIProxy *proxy = opaque;
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+ 
++    printf("virt: mmio_wr: @0x%016lx =0x%016lx\n", addr, val);
++
+     switch (addr) {
+     case VIRTIO_PCI_COMMON_DFSELECT:
+         proxy->dfselect = val;
