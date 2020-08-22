@@ -7,6 +7,7 @@ module axi4_m_r
 ,               SIZE            = 3'b010        // always refer to DATW
 ,               STBW            = (DATW/8)
 ,               DTMP            = 4096
+,               INST_2ND        = 0
 )
 (
     input                       i_clk
@@ -38,6 +39,7 @@ module axi4_m_r
 );
 
  	import "DPI-C" function void C_resp_read(input longint addr, input byte data_tmp[DTMP]);
+ 	import "DPI-C" function void C_resp_read_2nd(input longint addr, input byte data_tmp[DTMP]);
 
     //---------------------------------------------------------------------
     // Constant Declarations
@@ -135,6 +137,9 @@ module axi4_m_r
             //$display( "V: HDL -> QEMU: R_resp: RDATA=%h", i_m_rdata );
         end
         if (r_read_state == READ_DATA && i_m_rlast && i_m_rvalid) begin
+            if (INST_2ND == 1)
+            C_resp_read_2nd(n_addr, n_data_tmp);
+            else
             C_resp_read(n_addr, n_data_tmp);
         end
     end

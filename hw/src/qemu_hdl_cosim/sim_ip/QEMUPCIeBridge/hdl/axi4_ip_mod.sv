@@ -10,6 +10,7 @@ module axi4_ip
 ,               NSTB            = DTMP/STBW
 
 ,               CLKOFREQ        = 250
+,               INST_2ND        = 0
 )
 (
     // Clock/Reset
@@ -183,7 +184,12 @@ module axi4_ip
     import "DPI-C" function void    C_poll(output int req_type, output longint addr, output int len, 
                                            output int size, output int strb[0:NSTB-1], output byte data[0:DTMP-1]);
     import "DPI-C" function void    C_qemu_step();
-    
+   
+    import "DPI-C" function void    C_setup_pcie_connection_2nd();
+    import "DPI-C" function void    C_poll_2nd(output int req_type, output longint addr, output int len, 
+                                               output int size, output int strb[0:NSTB-1], output byte data[0:DTMP-1]);
+    import "DPI-C" function void    C_qemu_step_2nd();
+
     int strb[0:NSTB-1];
     byte data[0:DTMP-1];
     longint addr;
@@ -206,6 +212,9 @@ module axi4_ip
         send_m_write= 0;
         send_s_read = 0;
 
+        if (INST_2ND == 1)
+        C_poll_2nd(req_type, addr, len, size, strb, data);
+        else
         C_poll(req_type, addr, len, size, strb, data);
         
         case (req_type)
@@ -229,6 +238,9 @@ module axi4_ip
     end
 
     always@(posedge o_axi_aclk) begin
+        if (INST_2ND == 1)
+        C_qemu_step_2nd();
+        else
         C_qemu_step();
     end
 
@@ -241,7 +253,8 @@ module axi4_ip
     .DATW(DATW),
     .SIZE(SIZE),
     .STBW(STBW),
-    .DTMP(DTMP)
+    .DTMP(DTMP),
+    .INST_2ND(INST_2ND)
     ) axi4_m_r_inst (
        .i_clk        (o_axi_aclk            )
     ,  .i_rst_n      (o_axi_aresetn         )
@@ -278,7 +291,8 @@ module axi4_ip
     .SIZE(SIZE),
     .STBW(STBW),
     .DTMP(DTMP),
-    .NSTB(NSTB)
+    .NSTB(NSTB),
+    .INST_2ND(INST_2ND)
     ) axi4_m_w_inst (
        .i_clk        (o_axi_aclk            )
     ,  .i_rst_n      (o_axi_aresetn         )
@@ -322,7 +336,8 @@ module axi4_ip
     .SIZE(SIZE),
     .STBW(STBW),
     .DTMP(DTMP),
-    .NSTB(NSTB)
+    .NSTB(NSTB),
+    .INST_2ND(INST_2ND)
     ) axi4_s_r_inst (
          .i_clk        (o_axi_aclk      )
     ,    .i_rst_n      (o_axi_aresetn   )
@@ -356,7 +371,8 @@ module axi4_ip
     .DATW(DATW),
     .STBW(STBW),
     .DTMP(DTMP),
-    .STMP(DTMP/32)
+    .STMP(DTMP/32),
+    .INST_2ND(INST_2ND)
     ) axi4_s_w_inst (
          .i_clk        (o_axi_aclk      )
     ,    .i_rst_n      (o_axi_aresetn   )
@@ -394,7 +410,8 @@ module axi4_ip
     .DATW(DATW),
     .SIZE(SIZE),
     .STBW(STBW),
-    .DTMP(DTMP)
+    .DTMP(DTMP),
+    .INST_2ND(INST_2ND)
     ) axi4_s_i_inst (
          .i_clk        (o_axi_aclk      )
     ,    .i_rst_n      (o_axi_aresetn   )
@@ -410,6 +427,9 @@ module axi4_ip
     initial
     begin
 	$display("[%t] : V: axi4_ip: before C_setup_pcie_connection().", $realtime);
+        if (INST_2ND == 1)
+        C_setup_pcie_connection_2nd();
+        else
         C_setup_pcie_connection();
 	$display("[%t] : V: axi4_ip: after C_setup_pcie_connection().", $realtime);
         wait(~i_sys_rst_n);

@@ -5,6 +5,7 @@ proc init_gui { IPINST } {
   set Page_0 [ipgui::add_page $IPINST -name "Page 0"]
   ipgui::add_param $IPINST -name "ADRW" -parent ${Page_0}
   ipgui::add_param $IPINST -name "CLKOFREQ" -parent ${Page_0}
+  ipgui::add_param $IPINST -name "INST_2ND" -parent ${Page_0}
   ipgui::add_param $IPINST -name "DATW" -parent ${Page_0}
   ipgui::add_param $IPINST -name "DTMP" -parent ${Page_0}
   ipgui::add_param $IPINST -name "NSTB" -parent ${Page_0}
@@ -30,6 +31,15 @@ proc update_PARAM_VALUE.CLKOFREQ { PARAM_VALUE.CLKOFREQ } {
 
 proc validate_PARAM_VALUE.CLKOFREQ { PARAM_VALUE.CLKOFREQ } {
 	# Procedure called to validate CLKOFREQ
+	return true
+}
+
+proc update_PARAM_VALUE.INST_2ND { PARAM_VALUE.INST_2ND } {
+	# Procedure called to update INST_2ND when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.INST_2ND { PARAM_VALUE.INST_2ND } {
+	# Procedure called to validate INST_2ND
 	return true
 }
 
@@ -126,5 +136,10 @@ proc update_MODELPARAM_VALUE.NSTB { MODELPARAM_VALUE.NSTB PARAM_VALUE.NSTB } {
 proc update_MODELPARAM_VALUE.CLKOFREQ { MODELPARAM_VALUE.CLKOFREQ PARAM_VALUE.CLKOFREQ } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.CLKOFREQ}] ${MODELPARAM_VALUE.CLKOFREQ}
+}
+
+proc update_MODELPARAM_VALUE.INST_2ND { MODELPARAM_VALUE.INST_2ND PARAM_VALUE.INST_2ND } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.INST_2ND}] ${MODELPARAM_VALUE.INST_2ND}
 }
 

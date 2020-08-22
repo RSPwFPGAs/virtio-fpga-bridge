@@ -10,7 +10,8 @@ module axi4_m_w
 ,               SIZE            = 3'b010        // always refer to DATW
 ,               STBW            = (DATW/8)
 ,               DTMP            = 4096
-,				NSTB            = DTMP/STBW
+,               NSTB            = DTMP/STBW
+,               INST_2ND        = 0
 )
 (
     input                       i_clk
@@ -49,6 +50,7 @@ module axi4_m_w
 );
 
     import "DPI-C" function void C_resp_write();
+    import "DPI-C" function void C_resp_write_2nd();
 
     //---------------------------------------------------------------------
     // Constant Declarations
@@ -162,6 +164,9 @@ module axi4_m_w
     always@(posedge i_clk)
     begin: C_resp
         if (i_m_bvalid) 
+            if (INST_2ND == 1)
+            C_resp_write_2nd();
+            else
             C_resp_write();
     end
     

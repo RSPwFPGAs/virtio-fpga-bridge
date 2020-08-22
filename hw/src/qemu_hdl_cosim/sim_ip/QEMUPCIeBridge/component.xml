@@ -3012,6 +3012,11 @@
         <spirit:displayName>Clkofreq</spirit:displayName>
         <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.CLKOFREQ">250</spirit:value>
       </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>INST_2ND</spirit:name>
+        <spirit:displayName>Inst_2nd</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.INST_2ND">0</spirit:value>
+      </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
   <spirit:fileSets>
@@ -3121,6 +3126,11 @@
       <spirit:name>CLKOFREQ</spirit:name>
       <spirit:displayName>Clkofreq</spirit:displayName>
       <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.CLKOFREQ">250</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>INST_2ND</spirit:name>
+      <spirit:displayName>Inst_2nd</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.INST_2ND">0</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Component_Name</spirit:name>

@@ -8,6 +8,7 @@ module axi4_s_w
 ,               STBW            = (DATW/8)
 ,               DTMP            = 4096
 ,               STMP            = (DTMP/32)
+,               INST_2ND        = 0
 )
 (
     input                       i_clk
@@ -41,6 +42,8 @@ module axi4_s_w
 
     import "DPI-C" function void C_req_write(input longint addr, input int width, input int len,
                                             input byte data_tmp[DTMP], input int strb_tmp[STMP]);
+    import "DPI-C" function void C_req_write_2nd(input longint addr, input int width, input int len,
+                                                 input byte data_tmp[DTMP], input int strb_tmp[STMP]);
 
     //---------------------------------------------------------------------
     // Constant Declarations
@@ -168,6 +171,9 @@ module axi4_s_w
     always@(posedge i_clk)
     begin: C_req
         if (send_to_qemu) begin
+            if (INST_2ND == 1)
+            C_req_write_2nd(n_addr, n_size, n_len, n_data_tmp, n_strb_tmp);
+            else
             C_req_write(n_addr, n_size, n_len, n_data_tmp, n_strb_tmp);
         end
     end

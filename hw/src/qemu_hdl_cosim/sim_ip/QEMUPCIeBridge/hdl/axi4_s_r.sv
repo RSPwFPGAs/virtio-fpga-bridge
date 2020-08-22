@@ -10,7 +10,8 @@ module axi4_s_r
 ,               SIZE            = 3'b010        // always refer to DATW
 ,               STBW            = (DATW/8)
 ,               DTMP            = 4096
-,				NSTB            = DTMP/STBW
+,               NSTB            = DTMP/STBW
+,               INST_2ND        = 0
 )
 (
     input                       i_clk
@@ -40,6 +41,7 @@ module axi4_s_r
 );
 
 	import "DPI-C" function void C_req_read(input longint addr, input int width, input int len, input int id);
+	import "DPI-C" function void C_req_read_2nd(input longint addr, input int width, input int len, input int id);
     //---------------------------------------------------------------------
     // SLAVE READ
     //---------------------------------------------------------------------
@@ -141,6 +143,9 @@ module axi4_s_r
     always@(posedge i_clk)
     begin: C_slave_read_ff
         if(i_s_arvalid && r_read_state == READ_IDLE) begin
+            if (INST_2ND == 1)
+            C_req_read_2nd(i_s_araddr, i_s_arsize, i_s_arlen, i_s_arid);
+            else
             C_req_read(i_s_araddr, i_s_arsize, i_s_arlen, i_s_arid);
         end
     end

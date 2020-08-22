@@ -8,6 +8,7 @@ module axi4_s_i
 ,               SIZE            = 3'b010        // always refer to DATW
 ,               STBW            = (DATW/8)
 ,               DTMP            = 4096
+,               INST_2ND        = 0
 )
 (
     input                       i_clk
@@ -20,10 +21,14 @@ module axi4_s_i
 );
 
     import "DPI-C" function void     C_req_interrupt(input int vector);
+    import "DPI-C" function void     C_req_interrupt_2nd(input int vector);
     
     always@(posedge intx_msi_request)
     begin: INTR
         //Currently 0 is the only supported interrupt vector
+        if (INST_2ND == 1)
+        C_req_interrupt_2nd(0);
+        else
         C_req_interrupt(0);
     end
 
