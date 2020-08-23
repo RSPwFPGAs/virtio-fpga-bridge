@@ -63,6 +63,7 @@ Compile QEMU
 >```bash
 >    patch -s -p0 < qemu-cosim.patch
 >    patch -s -p0 < qemu-memfd.patch
+>    patch -s -p0 < qemu-iotrace.patch
 
 4. Configure and build
 
