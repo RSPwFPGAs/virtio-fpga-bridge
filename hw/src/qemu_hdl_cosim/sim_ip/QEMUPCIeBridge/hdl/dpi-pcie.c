@@ -150,7 +150,7 @@ void C_poll(unsigned int* req_type, unsigned long* v_addr, unsigned int* v_len,
         //TODO: Read from HDL axi_len times
         //READ from qemu
         if (acc_data->op == READ) {
-            printf("C: Q->H RD: addr: %lx\n", addr);
+            printf("C: QEMU->HDL RD: addr: %lx\n", addr);
             //Request read from hdl
 			*req_type = M_RD;
 			*v_addr = addr;
@@ -165,7 +165,7 @@ void C_poll(unsigned int* req_type, unsigned long* v_addr, unsigned int* v_len,
 			*req_type = M_WR;
             v_strb[0] = (1 << size) - 1;
 			v_strb[0] <<= align_offset;
-            printf("C: Q->H WR: addr: %lx len: %d size: %d strb: %x\n", addr, axi_len, axi_size, v_strb[0]);
+            printf("C: QEMU->HDL WR: addr: %lx len: %d size: %d strb: %x\n", addr, axi_len, axi_size, v_strb[0]);
             memcpy(v_data + align_offset, acc_data->data, BUFSZ - align_offset);
             *v_addr = addr;
             *v_len = axi_len;
@@ -175,7 +175,7 @@ void C_poll(unsigned int* req_type, unsigned long* v_addr, unsigned int* v_len,
         }
     } else if (sock == hdl_resp) {
         //Response from QEMU
-        printf("C: H->Q RD\n");
+        printf("C: HDL->QEMU RD\n");
 		*req_type = S_RD;
         zframe_t* frame = zframe_recv(hdl_resp);
         assert(frame);
@@ -196,7 +196,7 @@ void C_qemu_step() {
 }
 
 void C_req_read(long addr, int width, int len, int id) {
-    printf( "C: HDL ->QEMU: Read : RADDR=0x%x, WIDTH=%u, LEN=%u\n", addr, width, len);
+    printf("C: HDL->QEMU: Read : RADDR=0x%x, WIDTH=%u, LEN=%u\n", addr, width, len);
     
     int rv;
     uint32_t size = (len + 1) * (1 << width);   
@@ -216,7 +216,7 @@ void C_req_read(long addr, int width, int len, int id) {
 }
 
 void C_resp_read(long addr, unsigned char* data) {
-    printf("C: Q->H RD: addr: %lx complete\n", addr);
+    printf("C: QEMU->HDL RD: addr: %lx complete\n", addr);
     ACCData acc;
     uint32_t align_offset = addr % BUSW;
     //Update data
@@ -230,7 +230,7 @@ void C_resp_read(long addr, unsigned char* data) {
 }
 
 void C_resp_write() {
-    printf("C: Q->H WR: complete\n");
+    printf("C: QEMU->HDL WR: complete\n");
     ACCData acc;
     //Update data
     /* Create frame containing data to send */
@@ -242,7 +242,7 @@ void C_resp_write() {
 }
 
 void C_req_write(long addr, int width, int len, unsigned char* data, unsigned int* strb) {
-    printf( "C: HDL ->QEMU: Write: WADDR=0x%x, WIDTH=%u, LEN=%u\n", addr, width, len);
+    printf("C: HDL->QEMU: Write: WADDR=0x%x, WIDTH=%u, LEN=%u\n", addr, width, len);
     int rv;
     uint32_t size = (len + 1) * (1 << width);   
 
@@ -269,7 +269,7 @@ void C_req_write(long addr, int width, int len, unsigned char* data, unsigned in
 }
 
 void C_req_interrupt(int vector) {
-    printf( "C: HDL ->QEMU: INTR: VECTOR=0x%x\n", vector);
+    printf("C: HDL->QEMU: INTR: VECTOR=0x%x\n", vector);
     int rv;
     ACCData acc;
     //memset(&acc, 0, sizeof(ACCData));

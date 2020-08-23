@@ -1,9 +1,9 @@
 `timescale 1ns / 100ps
 
-//`include "axi_vip_0_exdes_generic.sv"
 `include "axi_vip_0_passthrough_mst_stimulus.sv"
 `include "axi_vip_1_passthrough_mst_stimulus.sv"
-//`include "axi_vip_0_slv_basic_stimulus.sv"
+`include "axi_vip_0_passthrough_mst_stimulus.2nd.sv"
+`include "axi_vip_1_passthrough_mst_stimulus.2nd.sv"
 
 module test_top ();
 
@@ -47,10 +47,10 @@ shell_region_wrapper DUT_2ND (
 defparam test_top.DUT_2ND.shell_region_i.FIM.FIU.pcie_axi_bridge.QEMUPCIeBridge_0.inst.INST_2ND = 1;
 
 // instantiate vip master
-//  axi_vip_0_exdes_generic  generic_tb();
   axi_vip_0_passthrough_mst_stimulus mst_axilite_toCSR();  // for initialization of CSR
   axi_vip_1_passthrough_mst_stimulus mst_axifull_toDMA();  // for transaction of DMA
-//  axi_vip_0_slv_basic_stimulus slv();
+  axi_vip_0_passthrough_mst_stimulus_2nd mst_axilite_toCSR_2nd();  // for initialization of CSR
+  axi_vip_1_passthrough_mst_stimulus_2nd mst_axifull_toDMA_2nd();  // for transaction of DMA
     
 always
 begin
@@ -84,24 +84,24 @@ end
 
 initial
 begin
-  $display("[%t] : System Reset(test_top/RESET) Is Asserted...", $realtime);
+  $display("[%t] V_TB: System Reset(test_top/RESET) Is Asserted...", $realtime);
   RESET = 1;
   #5000;
-  $display("[%t] : System Reset(test_top/RESET) Is DeAsserted...", $realtime);
+  $display("[%t] V_TB: System Reset(test_top/RESET) Is DeAsserted...", $realtime);
   RESET = 0;
 end
 
 initial
 begin
-  $display("[%t] : System Reset(test_top/PERSTN) Is Asserted...", $realtime);
+  $display("[%t] V_TB: System Reset(test_top/PERSTN) Is Asserted...", $realtime);
   PERSTN = 0;
   #100;
-  $display("[%t] : System Reset(test_top/PERSTN) Is DeAsserted...", $realtime);
+  $display("[%t] V_TB: System Reset(test_top/PERSTN) Is DeAsserted...", $realtime);
   PERSTN = 1;
 end
 
 initial begin
-  $display("V: testbench init.");
+  $display("[%t] V_TB: Testbench Init.", $realtime);
 end
 
 endmodule

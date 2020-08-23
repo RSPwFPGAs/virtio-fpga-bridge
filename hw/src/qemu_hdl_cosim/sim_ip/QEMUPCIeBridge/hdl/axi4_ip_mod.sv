@@ -173,10 +173,16 @@ module axi4_ip
 
     initial
     begin
-	$display("[%t] : System Reset(axi4_ip/rst_n_out) Is Asserted...", $realtime);
+        if (INST_2ND == 1)
+	$display("[%t] V_PCIE_2ND: System Reset(axi4_ip/rst_n_out) Is Asserted...", $realtime);
+	else
+        $display("[%t] V_PCIE: System Reset(axi4_ip/rst_n_out) Is Asserted...", $realtime);
         rst_n_out = 0;
         #(CLK_PERIOD*100.01);
-	$display("[%t] : System Reset(axi4_ip/rst_n_out) Is DeAsserted...", $realtime);
+        if (INST_2ND == 1)
+	$display("[%t] V_PCIE_2ND: System Reset(axi4_ip/rst_n_out) Is DeAsserted...", $realtime);
+	else
+        $display("[%t] V_PCIE: System Reset(axi4_ip/rst_n_out) Is DeAsserted...", $realtime);
         rst_n_out = 1;
     end
 
@@ -219,15 +225,24 @@ module axi4_ip
         
         case (req_type)
             M_RD: begin
-                $display("V: Q->H addr %x len %x size %x", addr+64'h`PCIE_BAR_MAP, len, size);
+                if (INST_2ND == 1)
+                $display("V_PCIE_2ND: Q->H addr %x len %x size %x", addr+64'h`PCIE_BAR_MAP, len, size);
+                else
+                $display("V_PCIE: Q->H addr %x len %x size %x", addr+64'h`PCIE_BAR_MAP, len, size);
                 send_m_read = 1;
             end
             M_WR: begin
-                $display("V: Q->H addr %x len %x size %x strb %x", addr+64'h`PCIE_BAR_MAP, len, size, strb[0]);
+                if (INST_2ND == 1)
+                $display("V_PCIE_2ND: Q->H addr %x len %x size %x strb %x", addr+64'h`PCIE_BAR_MAP, len, size, strb[0]);
+                else
+                $display("V_PCIE: Q->H addr %x len %x size %x strb %x", addr+64'h`PCIE_BAR_MAP, len, size, strb[0]);
                 send_m_write = 1;
             end
             S_RD: begin
-                $display("V: H->Q Read response %x%x%x%x", data[3], data[2], data[1], data[0]); 
+                if (INST_2ND == 1)
+                $display("V_PCIE_2ND: H->Q Read response %x%x%x%x", data[3], data[2], data[1], data[0]); 
+                else
+                $display("V_PCIE: H->Q Read response %x%x%x%x", data[3], data[2], data[1], data[0]); 
                 send_s_read = 1;
             end
         endcase
@@ -426,14 +441,19 @@ module axi4_ip
     //---------------------------------------------------------------------
     initial
     begin
-	$display("[%t] : V: axi4_ip: before C_setup_pcie_connection().", $realtime);
-        if (INST_2ND == 1)
-        C_setup_pcie_connection_2nd();
-        else
-        C_setup_pcie_connection();
-	$display("[%t] : V: axi4_ip: after C_setup_pcie_connection().", $realtime);
-        wait(~i_sys_rst_n);
-	$display("[%t] : V: axi4_ip: after System Reset(wait(~i_sys_rst_n)) .", $realtime);
+	if (INST_2ND == 1) begin
+	    $display("[%t] V_PCIE_2ND: axi4_ip: before C_setup_pcie_connection().", $realtime);
+            C_setup_pcie_connection_2nd();
+            $display("[%t] V_PCIE_2ND: axi4_ip: after C_setup_pcie_connection().", $realtime);
+            wait(~i_sys_rst_n);
+	    $display("[%t] V_PCIE_2ND: axi4_ip: after System Reset(wait(~i_sys_rst_n)) .", $realtime);
+        end else begin
+	    $display("[%t] V_PCIE: axi4_ip: before C_setup_pcie_connection().", $realtime);
+            C_setup_pcie_connection();
+            $display("[%t] V_PCIE: axi4_ip: after C_setup_pcie_connection().", $realtime);
+            wait(~i_sys_rst_n);
+	    $display("[%t] V_PCIE: axi4_ip: after System Reset(wait(~i_sys_rst_n)) .", $realtime);
+        end
     end
 
     assign  o_axi_aclk          = clk_out   ;
