@@ -2,10 +2,10 @@
 A platform for emulatiing Virtio front-end and back-end bridge with FPGAs.
 
 # Introduction
-With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-hdl-cosim/) framework, it is now possible to run the full system emulation of [Alibaba's BM-Hive](https://dl.acm.org/doi/10.1145/3373376.3378507) (X-Dragon) on a single x86 PC.
+With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-hdl-cosim/) framework, it is now possible to run the full system emulation of [BM-Hive](https://dl.acm.org/doi/10.1145/3373376.3378507) (Alibaba Cloud's X-Dragon, Shenlong in Chinese) on a single x86 PC.
 
-## Alibaba's BM-Hive
-![BM-Hive Architecture](./doc/bm-hive.png)
+## BM-Hive
+![BM-Hive architecture](./doc/bm-hive.png)
 
 ## virtio-fpga-bridge
 ![virtio-fpga-bridge architecture](./doc/qemu-hdl-cosim.png)
