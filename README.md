@@ -15,9 +15,15 @@ The Virtio front-end runs on the 1st x86(Qemu), and the Virtio back-end runs on 
 There are two PCIe-EP IPs instantiated in the FPGA logic. The EP interfacing with the 1st x86 is an implementation of the standard Virtio protocol. And there is no driver modification needed in the 1st x86 OS. The EP interfacing with the 2nd x86 is an implementation of a custom protocol, handling CSR/Mailbox registers and DMAs. And user space drivers, such as [ixy](https://github.com/emmericp/ixy), DPDK and SPDK, are needed for this interface.
 
 # Discussion
+## System topology
 With Virtio's Virtqueue implemented in FPGA, there are many possible combinations of how the system can be constructed.
 
 ![Topology comparison](./doc/fpga-bridging.png)
+
+## HW limitations
+BM-Hive requires special HW PCB board design, on which the x86 system is not available for many PCIe FPGA development boards. Adding a soft-core CPU inside the FPGA is an interesting option.
+
+![SoC FPGA alternative](./doc/soc_option.png)
 
 # Related Projects
 [qemu-hdl-cosim](https://github.com/RSPwFPGAs/qemu-hdl-cosim)
