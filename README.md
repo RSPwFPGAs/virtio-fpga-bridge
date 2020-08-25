@@ -8,7 +8,7 @@ With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-
 ![BM-Hive architecture](./doc/bm-hive.png)
 
 ## virtio-fpga-bridge
-The Virtio front-end runs on the 1st x86(Qemu), and the Virtio back-end runs on the 2nd x86(Qemu). FPGA(HDL Sim) plays the role of bridging the front-end and back-end, with shadow vrings and DMAs. 
+The Virtio front-end runs on the 1st x86(Qemu), and the Virtio back-end runs on the 2nd x86(Qemu). FPGA(HDL Sim) plays the role of bridging/synchronizing the front-end and back-end, with shadow vrings and DMAs. 
 
 ![virtio-fpga-bridge architecture](./doc/qemu-hdl-cosim.png)
 
