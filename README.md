@@ -8,9 +8,9 @@ With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-
 ![BM-Hive architecture](./doc/bm-hive.png)
 
 ## virtio-fpga-bridge
-![virtio-fpga-bridge architecture](./doc/qemu-hdl-cosim.png)
-
 The Virtio front-end runs on the 1st x86(Qemu), and the Virtio back-end runs on the 2nd x86(Qemu). FPGA(HDL Sim) plays the role of bridging the front-end and back-end, with shadow vrings and DMAs. 
+
+![virtio-fpga-bridge architecture](./doc/qemu-hdl-cosim.png)
 
 There are two PCIe-EP IPs instantiated in the FPGA logic. The EP facing the 1st x86 is an implementation of the standard Virtio protocol. And there is no driver modification needed in the 1st x86 OS. The EP interfacing with the 2nd x86 is an implementation of a custom protocol, handling CSR/Mailbox registers and DMAs. And user space drivers, such as [ixy](https://github.com/emmericp/ixy), DPDK and SPDK, are needed for this interface.
 
