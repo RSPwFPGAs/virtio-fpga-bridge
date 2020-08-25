@@ -23,7 +23,7 @@ With Virtio's Virtqueue implemented in FPGA, there are many possible combination
 ## HW limitations
 BM-Hive requires special HW PCB board design, on which the x86 system is not available for many PCIe FPGA development boards. Adding a soft-core CPU inside the FPGA is an interesting option.
 
-![SoC FPGA alternative](./doc/soc_option.png)
+![SoC FPGA alternative](./doc/soc-option.png)
 
 # Related Projects
 [qemu-hdl-cosim](https://github.com/RSPwFPGAs/qemu-hdl-cosim)
