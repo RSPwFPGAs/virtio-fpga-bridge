@@ -82,6 +82,7 @@ Compile QEMU
 >
 >```bash
 >    cp ../../../scripts/launch_fpga.sh .
+>    cp ../../../scripts/launch_fpga.2nd.sh .
 >    cd ../../
 
 Create a QEMU image
@@ -140,7 +141,7 @@ The waveform window will show AXI transactions when the application is launched 
 <a name="runapp"></a>
 ## Run application in Guest Machine
 
-1. In the host, Launch QEMU with accelerator in the 2nd terminal
+1. In the host, Launch the first x86 VM in QEMU with accelerator(COSIM_PORT=2019) in the 2nd terminal
 
 >
 >```bash
@@ -148,10 +149,32 @@ The waveform window will show AXI transactions when the application is launched 
 >    ./launch_fpga.sh
 >    (sudo -E x86_64-softmmu/qemu-system-x86_64 -m 4G -enable-kvm -cpu host -smp cores=1 -drive file=../../cosim.qcow2,cache=writethrough -device accelerator-pcie -redir tcp:2200::22 -display none)
 
-2. In the host, Log in to the VM in the 3rd terminal
+2. In the host, Log in to the first x86 VM in the 3rd terminal
 
 >
 >```bash
 >    ssh -p 2200 user@localhost
 
+3. In the host, Launch the second x86 in QEMU with accelerator(COSIM_PORT=2029) in the 4th terminal
 
+>
+>```bash
+>    cd $COSIM_REPO_HOME/qemu/qemu-2.10.0-rc3/build
+>    ./launch_fpga.2nd.sh
+>    (sudo -E x86_64-softmmu/qemu-system-x86_64 -m 4G -enable-kvm -cpu host -smp cores=1 -drive file=../../cosim.qcow2.2nd,cache=writethrough -device accelerator-pcie -redir tcp:2202::22 -display none)
+
+4. In the host, Log in to the 2nd x86 VM in the 5th terminal
+
+>
+>```bash
+>    ssh -p 2202 user@localhost
+
+## Test the Virtio NIC
+
+In both VM
+
+>
+>```bash
+>    sudo ifconfig ens4 up
+>    ping -I ens4 
+>    sudo ifconfig ens4 down
