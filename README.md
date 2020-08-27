@@ -1,5 +1,5 @@
 # virtio-fpga-bridge
-A platform for emulatiing Virtio front-end and back-end bridge with FPGAs.
+A platform for emulating Virtio frontend and backend bridging with FPGAs.
 
 # Introduction
 With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-hdl-cosim/) framework, it is now possible to run the full system emulation of [BM-Hive](https://dl.acm.org/doi/10.1145/3373376.3378507) (Alibaba Cloud's X-Dragon, Shenlong in Chinese) on a single x86 PC.
@@ -8,7 +8,7 @@ With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-
 ![BM-Hive architecture](./doc/bm-hive.png)
 
 ## virtio-fpga-bridge
-The Virtio front-end runs on the 1st x86(Qemu), and the Virtio back-end runs on the 2nd x86(Qemu). FPGA(HDL Sim) plays the role of bridging/synchronizing the front-end and back-end, with shadow vrings and DMAs. 
+The Virtio frontend runs on the 1st x86(Qemu), and the Virtio backend runs on the 2nd x86(Qemu). FPGA(HDL Sim) plays the role of bridging/synchronizing the frontend and backend, with shadow vrings and DMAs. 
 
 ![virtio-fpga-bridge architecture](./doc/qemu-hdl-cosim.png)
 
@@ -16,7 +16,7 @@ There are two PCIe-EP IPs instantiated in the FPGA logic. The EP facing the 1st 
 
 # Discussion
 ## System topology
-With Virtio's Virtqueue implemented in FPGA, there are many possible combinations of how the system can be constructed.
+With Virtio's Virtqueue handling implemented in FPGA, there are many possible combinations of how the system can be constructed.
 
 ![Topology comparison](./doc/fpga-bridging.png)
 
