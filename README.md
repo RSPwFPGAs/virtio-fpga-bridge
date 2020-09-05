@@ -32,3 +32,8 @@ BM-Hive requires special HW PCB board design, on which the x86 system is not ava
 
 [ixy Virtio driver with PCIe MMIO](https://github.com/RSPwFPGAs/ixy)
 
+# Useful Links
+[阿里云弹性裸金属服务器-神龙架构（X-Dragon）揭秘](https://developer.aliyun.com/article/594276)
+
+[KVM Forum 2019: VirtIO without the Virt](https://kvmforum2019.sched.com/event/TmxF/virtio-without-the-virt-towards-implementations-in-hardware-michael-tsirkin-red-hat)
+
