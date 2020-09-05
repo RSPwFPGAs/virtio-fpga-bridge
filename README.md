@@ -37,3 +37,7 @@ BM-Hive requires special HW PCB board design, on which the x86 system is not ava
 
 [KVM Forum 2019: VirtIO without the Virt](https://kvmforum2019.sched.com/event/TmxF/virtio-without-the-virt-towards-implementations-in-hardware-michael-tsirkin-red-hat)
 
+[Red Hat: Virtio-networking series 2019](https://www.redhat.com/en/blog/virtio-networking-first-series-finale-and-plans-2020)
+
+[Red Hat: Blogs on Virtualization](https://www.redhat.com/en/blog?f%5B0%5D=post_tags%3AVirtualization)
+
