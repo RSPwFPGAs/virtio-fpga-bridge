@@ -4,7 +4,7 @@ A platform for emulating Virtio frontend and backend bridging with FPGAs.
 # Introduction
 With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-hdl-cosim/) framework, it is now possible to run the full system emulation of [BM-Hive](https://dl.acm.org/doi/10.1145/3373376.3378507) (Alibaba Cloud's X-Dragon, "Shenlong" in Chinese) on a single x86 PC.
 
-## BM-Hive
+## BM-Hive architecture
 ![BM-Hive architecture](./doc/bm-hive.png)
 
 ## virtio-fpga-bridge
@@ -33,6 +33,8 @@ BM-Hive requires special HW PCB board design, on which the x86 system is not ava
 [ixy Virtio driver with PCIe MMIO](https://github.com/RSPwFPGAs/ixy)
 
 # Useful Links
+[阿里云神龙架构入选ASPLOS 20'论文解读](https://developer.aliyun.com/article/750344)
+
 [阿里云弹性裸金属服务器-神龙架构（X-Dragon）揭秘](https://developer.aliyun.com/article/594276)
 
 [KVM Forum 2019: VirtIO without the Virt](https://kvmforum2019.sched.com/event/TmxF/virtio-without-the-virt-towards-implementations-in-hardware-michael-tsirkin-red-hat)
