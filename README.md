@@ -2,7 +2,7 @@
 A platform for emulating Virtio frontend and backend bridging with FPGAs.
 
 # Introduction
-With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-hdl-cosim/) framework, it is now possible to run the full system emulation of [BM-Hive](https://dl.acm.org/doi/10.1145/3373376.3378507) (Alibaba Cloud's X-Dragon, "Shenlong" in Chinese) on a single x86 PC.
+With the [Qemu-HDL Cosim](http://compas.cs.stonybrook.edu/projects/fpgacloud/vm-hdl-cosim/) framework, it is now possible to run the full system emulation of [BM-Hive](https://www.semanticscholar.org/paper/High-density-Multi-tenant-Bare-metal-Cloud-Zhang-Zheng/ab1b5f0743816c8cb7188019d844ff3f7d565d9f) (Alibaba Cloud's X-Dragon, "Shenlong" in Chinese) on a single x86 PC.
 
 ## BM-Hive architecture
 ![BM-Hive architecture](./doc/bm-hive.png)
@@ -33,13 +33,25 @@ BM-Hive requires special HW PCB board design, on which the x86 system is not ava
 [ixy Virtio driver with PCIe MMIO](https://github.com/RSPwFPGAs/ixy)
 
 # Useful Links
+[High-density Multi-tenant Bare-metal Cloud](https://www.semanticscholar.org/paper/High-density-Multi-tenant-Bare-metal-Cloud-Zhang-Zheng/ab1b5f0743816c8cb7188019d844ff3f7d565d9f)
+
 [阿里云神龙架构入选ASPLOS 20'论文解读](https://developer.aliyun.com/article/750344)
 
 [阿里云弹性裸金属服务器-神龙架构（X-Dragon）揭秘](https://developer.aliyun.com/article/594276)
 
+
+[Vhost-user Protocol](https://github.com/qemu/qemu/blob/master/docs/interop/vhost-user.rst)
+
+[Red Hat Blog: A journey to the vhost-users realm](https://www.redhat.com/en/blog/journey-vhost-users-realm)
+
+[Red Hat Blog: Virtio-networking series 2019](https://www.redhat.com/en/blog/virtio-networking-first-series-finale-and-plans-2020)
+
+[Red Hat Blog: Blogs on Virtualization](https://www.redhat.com/en/blog?f%5B0%5D=post_tags%3AVirtualization)
+
+
 [KVM Forum 2019: VirtIO without the Virt](https://kvmforum2019.sched.com/event/TmxF/virtio-without-the-virt-towards-implementations-in-hardware-michael-tsirkin-red-hat)
 
-[Red Hat: Virtio-networking series 2019](https://www.redhat.com/en/blog/virtio-networking-first-series-finale-and-plans-2020)
+[VIRTIO-USER: A New Versatile Channel for Kernel-Bypass Networks](https://www.semanticscholar.org/paper/VIRTIO-USER%3A-A-New-Versatile-Channel-for-Networks-Tan-Liang/5b24283ceb79f70b63cc87859a101930e0b23c1a)
 
-[Red Hat: Blogs on Virtualization](https://www.redhat.com/en/blog?f%5B0%5D=post_tags%3AVirtualization)
+[IOVTee: A Fast and Pragmatic Software-based Zero-copy/Pass-through Mechanism for NFV-nodes](https://www.semanticscholar.org/paper/IOVTee%3A-A-Fast-and-Pragmatic-Software-based-for-Kawashima-Matsuo/225ee620ec151bad9696983c68fd37781077b717#extracted)
 
