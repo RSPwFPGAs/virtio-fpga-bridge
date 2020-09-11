@@ -26,7 +26,7 @@ BM-Hive requires special HW PCB board design, on which the x86 system is not ava
 ![SoC FPGA alternative](./doc/soc-option.png)
 
 ## Backend custom protocol design
-The backend protocol of the FPGA bridge follows the same design principle of vhost-user protocol, which is customized to run solely on PCIe.
+The backend protocol of the FPGA bridge follows the same design principle of vhost-user protocol, which is customized to run solely over PCIe.
 
 ![Custom protocol design following vhost-user](./doc/custom-protocol-vhost.png)
 
