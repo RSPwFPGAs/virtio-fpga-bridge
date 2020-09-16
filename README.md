@@ -56,7 +56,7 @@ The backend protocol of the FPGA bridge follows the same design principle of vho
 
 [KVM Forum 2019: VirtIO without the Virt](https://kvmforum2019.sched.com/event/TmxF/virtio-without-the-virt-towards-implementations-in-hardware-michael-tsirkin-red-hat)
 
-[Virtio devices high-level design](https://projectacrn.github.io/latest/developer-guides/hld/hld-virtio-devices.html#)
+[Project ACRN: Virtio devices high-level design](https://projectacrn.github.io/latest/developer-guides/hld/hld-virtio-devices.html#)
 
 [VIRTIO-USER: A New Versatile Channel for Kernel-Bypass Networks](https://www.semanticscholar.org/paper/VIRTIO-USER%3A-A-New-Versatile-Channel-for-Networks-Tan-Liang/5b24283ceb79f70b63cc87859a101930e0b23c1a)
 
